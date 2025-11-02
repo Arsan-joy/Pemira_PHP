@@ -3,50 +3,32 @@ require_once '../config/database.php';
 require_once '../includes/session.php';
 require_once '../includes/functions.php';
 
-// Redirect jika sudah login
-if (is_admin_logged_in()) {
-    header("Location: dashboard.php");
-    exit();
-}
+if (is_admin_logged_in()) { header('Location: dashboard.php'); exit; }
 
 $error = '';
 
-// Proses login
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = clean_input($_POST['username']);
-    $password = $_POST['password'];
-    
-    if (empty($username) || empty($password)) {
-        $error = "Username dan password harus diisi!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = clean_input($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($username === '' || $password === '') {
+        $error = 'Username dan password harus diisi!';
     } else {
-        $stmt = $conn->prepare("SELECT * FROM admin WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows == 1) {
-            $admin = $result->fetch_assoc();
-            
-            if (password_verify($password, $admin['password'])) {
-                // Set session
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_username'] = $admin['username'];
-                $_SESSION['admin_name'] = $admin['nama'];
-                
-                // Log aktivitas
-                log_activity('admin', $admin['id'], $admin['username'], 'Login berhasil');
-                
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                $error = "Username atau password salah!";
-            }
+        $stmt = pdo()->prepare("SELECT * FROM admin WHERE username = :u LIMIT 1");
+        $stmt->execute([':u' => $username]);
+        $admin = $stmt->fetch();
+
+        if ($admin && password_verify($password, $admin['password'])) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id']       = (int)$admin['id'];
+            $_SESSION['admin_username'] = $admin['username'];
+            $_SESSION['admin_name']     = $admin['nama'];
+
+            log_activity('admin', (int)$admin['id'], $admin['username'], 'Login berhasil');
+            header('Location: dashboard.php'); exit;
         } else {
-            $error = "Username atau password salah!";
+            $error = 'Username atau password salah!';
         }
-        
-        $stmt->close();
     }
 }
 ?>

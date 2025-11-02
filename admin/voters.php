@@ -110,20 +110,6 @@ $voters = pdo()->query("SELECT * FROM voters ORDER BY has_voted ASC, nama_lengka
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelola Pemilih - Admin Pemira</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>/* (style sama seperti sebelumnya) */</style>
-</head>
-<body>
-<!-- (HTML sama, gunakan h() untuk seluruh output variabel) -->
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Pemilih - Admin Pemira</title>
@@ -348,7 +334,7 @@ $voters = pdo()->query("SELECT * FROM voters ORDER BY has_voted ASC, nama_lengka
                     <tbody>
                         <?php 
                         $no = 1;
-                        while ($voter = $voters->fetch_assoc()): 
+                        foreach ($voters as $voter): 
                         ?>
                             <tr>
                                 <td><?php echo $no++; ?></td>
@@ -369,7 +355,7 @@ $voters = pdo()->query("SELECT * FROM voters ORDER BY has_voted ASC, nama_lengka
                                 </td>
                                 <td>
                                     <?php 
-                                    if ($voter['voted_at']) {
+                                    if (!empty($voter['voted_at'])) {
                                         echo date('d/m/Y H:i', strtotime($voter['voted_at']));
                                     } else {
                                         echo '-';
@@ -381,7 +367,7 @@ $voters = pdo()->query("SELECT * FROM voters ORDER BY has_voted ASC, nama_lengka
                                             onclick="editVoter(<?php echo htmlspecialchars(json_encode($voter)); ?>)">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <?php if ($voter['has_voted']): ?>
+                                    <?php if (!empty($voter['has_voted'])): ?>
                                         <a href="?reset=<?php echo $voter['id']; ?>" 
                                            class="btn btn-sm btn-info"
                                            onclick="return confirm('Yakin ingin reset status voting?')">
@@ -395,7 +381,7 @@ $voters = pdo()->query("SELECT * FROM voters ORDER BY has_voted ASC, nama_lengka
                                     </a>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

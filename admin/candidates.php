@@ -360,7 +360,7 @@ $candidates = pdo()->query("SELECT * FROM candidates ORDER BY posisi, nomor_urut
                     <tbody>
                         <?php 
                         $no = 1;
-                        while ($candidate = $candidates->fetch_assoc()): 
+                        foreach ($candidates as $candidate): 
                         ?>
                             <tr>
                                 <td><?php echo $no++; ?></td>
@@ -399,7 +399,7 @@ $candidates = pdo()->query("SELECT * FROM candidates ORDER BY posisi, nomor_urut
                                     </a>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
