@@ -24,6 +24,7 @@ if (!$voter) { logout(); header('Location: index.php'); exit; }
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Pemilih - Pemira HMTA</title>
+<link rel="icon" href="assets/LOGO/IMG_1381.PNG" type="image/PNG">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -301,7 +302,7 @@ if (!$voter) { logout(); header('Location: index.php'); exit; }
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-vote-yea"></i> PEMIRA HIMATEP
+                <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo HMTA" width="30" height="30" class="me-2"> PEMIRA HMTA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

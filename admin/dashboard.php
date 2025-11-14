@@ -16,6 +16,7 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Pemira HMTA </title>
+    <link rel="icon" href="assets/LOGO/IMG_1381.PNG" type="image/PNG">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -250,8 +251,8 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <i class="fas fa-vote-yea" style="font-size: 50px; color: var(--secondary-color);"></i>
-            <h4>PEMIRA HMTA
+            <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo HMTA" width="50" height="50" class="mb-3">
+            <h4>PEMIRA HMTA</h4>
             <p>Admin Panel</p>
         </div>
         <div class="sidebar-menu">

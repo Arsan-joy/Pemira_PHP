@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Pemilih - Pemira HIMATEP</title>
+<title>Login Pemilih - Pemira HMTA</title>
+<link rel="icon" href="assets/LOGO/IMG_1381.PNG" type="image/PNG">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -181,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-container">
             <div class="login-card">
                 <div class="login-header">
-                    <i class="fas fa-vote-yea"></i>
+                    <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo HMTA" width="80" height="80" class="mb-3">
                     <h2>PEMIRA HMTA</h2>
                     <p>Pemilihan Raya Himpunan Mahasiswa<br>Teknik Pertambangan</p>
                 </div>
@@ -225,11 +226,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </button>
                     </form>
                     
-                    <div class="admin-link">
-                        <a href="admin/index.php">
-                            <i class="fas fa-user-shield"></i> Login sebagai Admin
-                        </a>
-                    </div>
                 </div>
             </div>
             

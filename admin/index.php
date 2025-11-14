@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Pemira HMTA</title>
+    <link rel="icon" href="assets/LOGO/IMG_1381.PNG" type="image/PNG">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -93,10 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             animation: rotate 3s linear infinite;
         }
         
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         
         .login-header h2 {
             font-weight: 700;
@@ -176,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="login-header">
                     <i class="fas fa-user-shield"></i>
                     <h2>ADMIN PANEL</h2>
-                    <p>Pemira HMTA>
+                    <p>Pemira HMTA - Login Administrator</p>
                 </div>
                 
                 <div class="login-body">
