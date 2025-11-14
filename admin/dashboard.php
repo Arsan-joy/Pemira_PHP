@@ -8,7 +8,7 @@ if (!is_admin_logged_in()) { header('Location: index.php'); exit; }
 $stats   = get_voting_statistics();
 $results = get_voting_results();
 
-$recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DESC LIMIT 10");
+$recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DESC LIMIT 10")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -16,7 +16,6 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Pemira HMTA </title>
-    <link rel="icon" href="assets/LOGO/IMG_1381.PNG" type="image/PNG">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -251,7 +250,7 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo HMTA" width="50" height="50" class="mb-3">
+            <i class="fas fa-vote-yea" style="font-size: 50px; color: var(--secondary-color);"></i>
             <h4>PEMIRA HMTA</h4>
             <p>Admin Panel</p>
         </div>
@@ -416,7 +415,7 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($log = $recent_logs->fetch_assoc()): ?>
+                        <?php foreach ($recent_logs as $log): ?>
                             <tr>
                                 <td><?php echo date('d/m/Y H:i:s', strtotime($log['created_at'])); ?></td>
                                 <td>
@@ -434,7 +433,7 @@ $recent_logs = pdo()->query("SELECT * FROM activity_logs ORDER BY created_at DES
                                 <td><?php echo htmlspecialchars($log['activity']); ?></td>
                                 <td><code><?php echo htmlspecialchars($log['ip_address']); ?></code></td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

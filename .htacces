@@ -1,0 +1,19 @@
+# Prevent directory listing
+Options -Indexes
+
+# Protect reset files
+<FilesMatch "^reset_.*\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect config files
+<FilesMatch "^(config|includes)">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Force HTTPS (jika ada SSL)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
