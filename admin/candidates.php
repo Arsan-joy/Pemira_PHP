@@ -20,15 +20,41 @@ if (isset($_POST['add_candidate'])) {
         $error = 'Data kandidat tidak valid.';
     } else {
         $foto = 'default.jpg';
+
+        // Upload foto - aman: pastikan direktori ada & cek is_uploaded_file
         if (!empty($_FILES['foto']['name']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
             $allowed = ['jpg','jpeg','png','gif'];
             $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
             if (in_array($ext, $allowed, true)) {
-                $new = 'candidate_' . time() . '_' . bin2hex(random_bytes(3)) . '.' . $ext;
-                $target = __DIR__ . '/../assets/images/candidates/' . $new;
-                if (move_uploaded_file($_FILES['foto']['tmp_name'], $target)) {
-                    $foto = $new;
+                // direktori upload absolut
+                $uploadDir = __DIR__ . '/../assets/images/candidates';
+                if (!is_dir($uploadDir)) {
+                    // coba buat direktori secara rekursif
+                    if (!mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+                        error_log('Gagal membuat direktori upload: ' . $uploadDir);
+                    }
                 }
+
+                // generate nama file aman
+                try {
+                    $rand = bin2hex(random_bytes(3));
+                } catch (Throwable $e) {
+                    $rand = substr(md5(uniqid('', true)), 0, 6);
+                }
+                $new = 'candidate_' . time() . '_' . $rand . '.' . $ext;
+                $target = $uploadDir . DIRECTORY_SEPARATOR . $new;
+
+                if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+                    if (move_uploaded_file($_FILES['foto']['tmp_name'], $target)) {
+                        $foto = $new;
+                    } else {
+                        error_log('Gagal memindahkan file upload ke: ' . $target . ' ; $_FILES: ' . print_r($_FILES['foto'], true));
+                    }
+                } else {
+                    error_log('File upload tidak dikenali sebagai uploaded file oleh PHP: ' . ($_FILES['foto']['tmp_name'] ?? ''));
+                }
+            } else {
+                error_log('Ekstensi file tidak diizinkan: ' . $ext);
             }
         }
 
@@ -69,19 +95,42 @@ if (isset($_POST['edit_candidate'])) {
     } else {
         $foto = $row['foto'];
 
+        // Upload foto (edit) - gunakan pengecekan direktori & is_uploaded_file
         if (!empty($_FILES['foto']['name']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
             $allowed = ['jpg','jpeg','png','gif'];
             $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
             if (in_array($ext, $allowed, true)) {
-                $new = 'candidate_' . time() . '_' . bin2hex(random_bytes(3)) . '.' . $ext;
-                $target = __DIR__ . '/../assets/images/candidates/' . $new;
-                if (move_uploaded_file($_FILES['foto']['tmp_name'], $target)) {
-                    if ($foto !== 'default.jpg') {
-                        $old = __DIR__ . '/../assets/images/candidates/' . $foto;
-                        if (is_file($old)) @unlink($old);
+                $uploadDir = __DIR__ . '/../assets/images/candidates';
+                if (!is_dir($uploadDir)) {
+                    if (!mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+                        error_log('Gagal membuat direktori upload: ' . $uploadDir);
                     }
-                    $foto = $new;
                 }
+
+                try {
+                    $rand = bin2hex(random_bytes(3));
+                } catch (Throwable $e) {
+                    $rand = substr(md5(uniqid('', true)), 0, 6);
+                }
+                $new = 'candidate_' . time() . '_' . $rand . '.' . $ext;
+                $target = $uploadDir . DIRECTORY_SEPARATOR . $new;
+
+                if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+                    if (move_uploaded_file($_FILES['foto']['tmp_name'], $target)) {
+                        // hapus file lama jika bukan default
+                        if ($foto !== 'default.jpg') {
+                            $old = $uploadDir . DIRECTORY_SEPARATOR . $foto;
+                            if (is_file($old)) @unlink($old);
+                        }
+                        $foto = $new;
+                    } else {
+                        error_log('Gagal memindahkan file upload ke: ' . $target . ' ; $_FILES: ' . print_r($_FILES['foto'], true));
+                    }
+                } else {
+                    error_log('File upload tidak dikenali sebagai uploaded file oleh PHP: ' . ($_FILES['foto']['tmp_name'] ?? ''));
+                }
+            } else {
+                error_log('Ekstensi file tidak diizinkan: ' . $ext);
             }
         }
 

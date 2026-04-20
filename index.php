@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-container">
             <div class="login-card">
                 <div class="login-header">
-                    <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo HMTA" width="80" height="80" class="mb-3">
+                    <img src="assets/LOGO/1000324952-removebg-preview.PNG" alt="Logo Pemira" width="80" height="80" class="mb-3" type="image/PNG">
                     <h2>PEMIRA HMTA</h2>
                     <p>Pemilihan Raya Himpunan Mahasiswa<br>Teknik Pertambangan</p>
                 </div>

@@ -6,9 +6,9 @@ declare(strict_types=1);
  */
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'pemirahm_wp_oe538');
-define('DB_PASS', 'jcQpU4Q7X');  // Ganti dengan password user database
-define('DB_NAME', 'pemirahm_wp_h03kj');
+define('DB_USER', 'root');  // Ganti dengan user database
+define('DB_PASS', '');  // Ganti dengan password user database
+define('DB_NAME', 'pemira_himatepa');
 
 $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
 
